@@ -10,7 +10,7 @@
   --header-z-index: 100;
 }
 
-:global(.logo) {
+.logo {
   color: var(--white);
   font-weight: 800;
   font-size: 1.25rem;
@@ -18,14 +18,14 @@
   font-family: Noto Sans;
 }
 
-:global(.preview) {
+.preview {
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-family: Inter;
 }
 
-:global(.page__title) {
+.page__title {
   margin-bottom: 1.5rem;
   font-weight: 700;
   font-size: 1.5rem;
@@ -33,21 +33,21 @@
   font-family: Noto Sans KR;
 }
 
-:global(.text) {
+.text {
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 0.9375rem;
   font-family: Noto Sans;
 }
 
-:global(.product-name) {
+.product-name {
   font-weight: 700;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-family: Inter;
 }
 
-:global(.button__text) {
+.button__text {
   font-weight: 600;
   font-size: 0.75rem;
   line-height: 0.9375rem;

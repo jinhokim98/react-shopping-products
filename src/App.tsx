@@ -1,6 +1,6 @@
 import '@styles/App.css';
 import '@styles/reset.css';
-import '@styles/global.module.css';
+import '@styles/global.css';
 import { CartAction, PageRequest } from '@components/Fallbacks';
 import { Header, Layout, ToastModal } from '@components/index';
 import { useEffect, useRef, useState } from 'react';
