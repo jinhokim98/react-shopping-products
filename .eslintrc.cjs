@@ -6,6 +6,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:import/recommended',
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -20,36 +21,6 @@ module.exports = {
         ignoreDeclarationSort: true,
         ignoreMemberSort: false,
         allowSeparatedGroups: true,
-      },
-    ],
-    'import/order': [
-      'error',
-      {
-        'newlines-between': 'always',
-        groups: [['builtin', 'external'], 'internal', 'parent', 'sibling', 'index'],
-        pathGroups: [
-          {
-            pattern: 'next',
-            group: 'builtin',
-          },
-          {
-            pattern: 'react',
-            group: 'builtin',
-          },
-          {
-            pattern: '@MyDesignSystem/**',
-            group: 'internal',
-          },
-          {
-            pattern: 'src/**',
-            group: 'internal',
-          },
-        ],
-        pathGroupsExcludedImportTypes: ['src/**', '@MyDesignSystem/**'],
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
       },
     ],
   },

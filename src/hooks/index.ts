@@ -1,6 +1,4 @@
 export { default as useToastModalAnimation } from './useToastModalAnimation';
-export { default as useTargetContext } from './useTargetContext';
-export { default as useCartAction } from './useCartAction';
-export { default as useFetch } from './useFetch';
-export { default as useStackProducts } from './useStackProducts';
-export { default as useFilteredProducts } from './useFilteredProducts';
+export { default as useAddCartItem } from './useAddCartItem';
+export { default as useDeleteCartItem } from './useDeleteCartItem';
+export { default as useLoadCartItems } from './useLoadCartItems';

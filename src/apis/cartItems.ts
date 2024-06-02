@@ -28,7 +28,7 @@ export async function fetchGetCartItems(totalNumbers: number = 20) {
   return {
     totalNumbers: result.totalElements,
     cartItems: result.content,
-    isTotalCartItems: result.totalElements === result.content.length,
+    totalElements: result.totalElements,
   };
 }
 

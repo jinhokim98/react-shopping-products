@@ -8,7 +8,18 @@
   width: var(--desktop-width);
   height: 2.5rem;
   text-align: center;
+  white-space: pre-line;
 }
+
+
+@media screen and (max-width: 500px) {
+  .cartAction {
+    left: 0;
+    width: var(--mobile-width);
+    font-size: 0.625rem;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .cartAction {
@@ -16,3 +27,4 @@
     width: var(--mobile-width);
   }
 }
+

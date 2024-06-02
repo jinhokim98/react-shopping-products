@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 interface IntersectionObserverAreaProps {
-  callback: (entries: IntersectionObserverEntry[]) => void;
+  callback: () => Promise<void>;
   targetRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
@@ -10,9 +10,13 @@ function IntersectionObserverArea({
   callback,
   children,
 }: React.PropsWithChildren<IntersectionObserverAreaProps>) {
-  const observer = new IntersectionObserver(callback, { threshold: 1 });
-
   useEffect(() => {
+    const observerCallback = async (entries: IntersectionObserverEntry[]) => {
+      if (!entries[0].isIntersecting) return;
+      await callback();
+    };
+
+    const observer = new IntersectionObserver(observerCallback, { threshold: 1 });
     if (targetRef.current) {
       observer.observe(targetRef.current);
     }

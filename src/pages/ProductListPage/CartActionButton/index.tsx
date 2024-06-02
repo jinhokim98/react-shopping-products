@@ -1,14 +1,17 @@
 import AddIcon from '@assets/addCart.svg';
 import DeleteIcon from '@assets/deleteCart.svg';
-import React from 'react';
-
 import style from './style.module.css';
+import { useAddCartItem, useDeleteCartItem } from '@hooks/index';
+import { CartItem } from '@appTypes/index';
+import { ToastModal } from '@src/components';
+import { CartActionError } from '@src/components/Fallbacks';
 
 type ButtonType = 'add' | 'delete';
 
 interface CartActionButtonProps {
-  buttonType: ButtonType;
-  onClick: (event?: React.MouseEvent<HTMLButtonElement>) => void;
+  cartItem: CartItem;
+  productId: number;
+  refetch: () => Promise<void>;
 }
 
 interface ButtonInfo {
@@ -30,15 +33,40 @@ const BUTTON_INFO: Record<ButtonType, ButtonInfo> = {
   },
 };
 
-function CartActionButton({ buttonType, onClick }: CartActionButtonProps) {
+function CartActionButton({ cartItem, productId, refetch }: CartActionButtonProps) {
+  const isInCart = cartItem !== undefined;
+  const buttonType = isInCart ? 'delete' : 'add';
+
   const { src, alt, text } = BUTTON_INFO[buttonType];
   const className = `${style.button} ${style[buttonType]}`;
 
+  const { addCartItem, loading: addLoading, error: addError } = useAddCartItem(refetch);
+  const { deleteCarItem, loading: deleteLoading, error: deleteError } = useDeleteCartItem(refetch);
+
+  const onAction = async () => {
+    if (isInCart) {
+      await deleteCarItem(cartItem);
+      return;
+    }
+
+    await addCartItem(productId);
+  };
+
+  const isPending = addLoading || deleteLoading;
+  const isError = addError !== '' || deleteError !== '';
+
   return (
-    <button onClick={onClick} className={className}>
-      <img src={src} alt={alt} />
-      <span className="button__text">{text}</span>
-    </button>
+    <>
+      <button onClick={onAction} className={className} disabled={isPending}>
+        <img src={src} alt={alt} />
+        <span className="button__text">{text}</span>
+      </button>
+      {isError && (
+        <ToastModal isError={isError} position={{ top: 40 }}>
+          <CartActionError />
+        </ToastModal>
+      )}
+    </>
   );
 }
 
