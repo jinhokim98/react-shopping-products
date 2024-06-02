@@ -28,11 +28,11 @@ const useLoadProducts = (filtering: Filtering) => {
     try {
       if (isLast || !products.length) return;
       setLoading(true);
+      setError('');
       const newPage = page + 1;
       const result = await fetchProduct({ filtering, page: newPage });
       if (!result) return;
       updateState({ newPage, ...result, newProducts: [...products, ...result.products], isLast: result.isLast });
-      setError('');
     } catch (error) {
       const errorMessage = (error as Error).message;
       setError(errorMessage);
@@ -45,6 +45,7 @@ const useLoadProducts = (filtering: Filtering) => {
     try {
       setProducts([]);
       setLoading(true);
+      setError('');
       const result = await fetchProduct({ filtering });
       updateState({ isLast: result.isLast, newProducts: result.products, newPage: 0 });
     } catch (error) {

@@ -9,6 +9,8 @@ const useLoadCartItems = () => {
 
   const getCartItemList = async () => {
     try {
+      setLoading(true);
+      setError('');
       const firstResult = await fetchGetCartItems();
       if (!firstResult) return;
 
@@ -22,7 +24,6 @@ const useLoadCartItems = () => {
       if (!result) return;
 
       setCartItem(result.cartItems);
-      setError('');
     } catch (error) {
       const errorMessage = (error as Error).message;
       setError(errorMessage);
