@@ -31,7 +31,7 @@ const usePatchCartItemQuantity = () => {
       return { prevData };
     },
 
-    onError: (error, params, context) => {
+    onError: (_, __, context) => {
       if (context?.prevData) {
         queryClient.setQueryData([QUERY_KEYS.getCartItems], context.prevData);
       }
