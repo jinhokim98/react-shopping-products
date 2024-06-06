@@ -15,9 +15,15 @@ const cartHandler = [
 
     return HttpResponse.json(response);
   }),
+
   http.post(END_POINTS.cartItems, async () => {
     return HttpResponse.json();
   }),
+
+  http.patch(`${END_POINTS.cartItems}/:cartItemId`, async () => {
+    return HttpResponse.json();
+  }),
+
   http.delete(`${END_POINTS.cartItems}/:cartItemId`, async () => {
     return HttpResponse.json();
   }),

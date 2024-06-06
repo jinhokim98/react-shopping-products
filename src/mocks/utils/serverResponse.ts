@@ -1,17 +1,11 @@
-import { ServerResponse } from '@src/appTypes';
+import { ServerResponse } from '@appTypes/index';
 
 interface MakeServerResponseParams<T> {
   page: number;
   size: number;
-  last?: boolean;
   content: T;
 }
-export function makeServerResponse<T>({
-  page,
-  size,
-  last = false,
-  content,
-}: MakeServerResponseParams<T>): ServerResponse<T> {
+export function makeServerResponse<T>({ page, size, content }: MakeServerResponseParams<T>): ServerResponse<T> {
   return {
     content,
     pageable: {
@@ -26,7 +20,7 @@ export function makeServerResponse<T>({
       paged: true,
       unpaged: false,
     },
-    last,
+    last: page >= 24,
     totalPages: 100,
     totalElements: 100,
     sort: {

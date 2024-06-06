@@ -1,4 +1,4 @@
-import { ID, PASSWORD } from '@src/constants/system';
+import { ID, PASSWORD } from '@constants/system';
 
 import { generateBasicToken } from './auth';
 

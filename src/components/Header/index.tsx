@@ -1,17 +1,20 @@
+import useLoadCartItems from '@queries/cart/useLoadCartItems';
 import CartBadgeButton from './CartBadgeButton';
 import Logo from './Logo';
 import style from './style.module.css';
+import { CartActionError } from '@components/Fallbacks';
 
-interface HeaderProps {
-  cartItemsLength: number;
-}
+function Header() {
+  const { cartItems, isError } = useLoadCartItems();
 
-function Header({ cartItemsLength }: HeaderProps) {
   return (
-    <header className={style.header}>
-      <Logo />
-      <CartBadgeButton cartItemsLength={cartItemsLength} />
-    </header>
+    <>
+      <header className={style.header}>
+        <Logo />
+        <CartBadgeButton cartItemsLength={cartItems?.length ?? 0} />
+      </header>
+      <CartActionError isError={isError} />
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-import { useToastModalAnimation } from '@hooks/index';
+import useToastModalAnimation from '@hooks/useToastModalAnimation';
 
 import style from './style.module.css';
 import { createPortal } from 'react-dom';

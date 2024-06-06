@@ -29,7 +29,7 @@ const productsHandler = [
     const sortedProducts = sortProducts(sort, filteredProducts);
 
     const limit = page === 0 ? 20 : 4;
-    const start = page === 0 ? 0 : (page - 1) * 4 + 20;
+    const start = page === 0 ? 0 : (page - 5) * 4 + 20;
     const end = start + limit;
 
     const response = makeServerResponse<Product[]>({

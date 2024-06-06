@@ -1,17 +1,18 @@
 import AddIcon from '@assets/addCart.svg';
 import DeleteIcon from '@assets/deleteCart.svg';
 import style from './style.module.css';
-import { useAddCartItem, useDeleteCartItem } from '@hooks/index';
 import { CartItem } from '@appTypes/index';
-import { ToastModal } from '@src/components';
-import { CartActionError } from '@src/components/Fallbacks';
+import { CartActionError } from '@components/Fallbacks';
+import useAddCartItem from '@queries/cart/useAddCartItem';
+import useDeleteCartItem from '@queries/cart/useDeleteCartItem';
+import usePatchCartItemQuantity from '@queries/cart/usePatchCartItemQuantity';
+import Stepper from '@components/Stepper';
 
 type ButtonType = 'add' | 'delete';
 
 interface CartActionButtonProps {
-  cartItem: CartItem;
+  cartItem: CartItem | undefined;
   productId: number;
-  refetch: () => Promise<void>;
 }
 
 interface ButtonInfo {
@@ -33,39 +34,49 @@ const BUTTON_INFO: Record<ButtonType, ButtonInfo> = {
   },
 };
 
-function CartActionButton({ cartItem, productId, refetch }: CartActionButtonProps) {
+function CartActionButton({ cartItem, productId }: CartActionButtonProps) {
   const isInCart = cartItem !== undefined;
   const buttonType = isInCart ? 'delete' : 'add';
 
   const { src, alt, text } = BUTTON_INFO[buttonType];
   const className = `${style.button} ${style[buttonType]}`;
 
-  const { addCartItem, loading: addLoading, error: addError } = useAddCartItem(refetch);
-  const { deleteCarItem, loading: deleteLoading, error: deleteError } = useDeleteCartItem(refetch);
+  const { addCartItem, isPending: addLoading, isError: addError } = useAddCartItem();
+  const { deleteCartItem, isPending: deleteLoading, isError: deleteError } = useDeleteCartItem();
+  const { changeQuantity } = usePatchCartItemQuantity();
 
-  const onAction = async () => {
-    if (isInCart) {
-      await deleteCarItem(cartItem);
+  const isPending = addLoading || deleteLoading;
+  const isError = addError || deleteError;
+
+  const onDecrement = () => {
+    if (!cartItem) return;
+    if (cartItem.quantity <= 1) {
+      deleteCartItem(cartItem.id);
       return;
     }
 
-    await addCartItem(productId);
+    const newQuantity = cartItem.quantity - 1;
+    changeQuantity({ cartItemId: cartItem.id, quantity: newQuantity });
   };
-
-  const isPending = addLoading || deleteLoading;
-  const isError = addError !== '' || deleteError !== '';
+  const onIncrement = () => {
+    if (!cartItem) return;
+    const newQuantity = cartItem.quantity + 1;
+    changeQuantity({ cartItemId: cartItem.id, quantity: newQuantity });
+  };
 
   return (
     <>
-      <button onClick={onAction} className={className} disabled={isPending}>
-        <img src={src} alt={alt} />
-        <span className="button__text">{text}</span>
-      </button>
-      {isError && (
-        <ToastModal isError={isError} position={{ top: 40 }}>
-          <CartActionError />
-        </ToastModal>
+      {cartItem ? (
+        <div className={style.stepperPosition}>
+          <Stepper value={cartItem.quantity} handleDecrement={onDecrement} handleIncrement={onIncrement} />
+        </div>
+      ) : (
+        <button onClick={() => addCartItem({ productId })} className={className} disabled={isPending}>
+          <img src={src} alt={alt} />
+          <span className="button__text">{text}</span>
+        </button>
       )}
+      <CartActionError isError={isError} />
     </>
   );
 }

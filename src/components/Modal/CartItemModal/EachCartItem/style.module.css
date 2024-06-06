@@ -1,0 +1,48 @@
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.hr {
+  width: 100%;
+  height: 0.1rem;
+  margin-bottom: 0.75rem;
+  border: 0.0625rem solid var(--border-color);
+}
+
+.button {
+  position: absolute;
+  top: 1.25rem;
+  right: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  border: 0.0625rem solid var(--border-color);
+  border-radius: 0.25rem;
+}
+
+.contents {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.productImage {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.description {
+  padding: 0.2rem 0;
+}
+
+.productName {
+  margin-bottom: 0.5rem;
+  font-family: Noto Sans KR;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+}
+
+.price {
+  margin-bottom: 0.625rem;
+}

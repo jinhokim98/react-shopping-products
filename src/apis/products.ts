@@ -25,7 +25,9 @@ const getSearchParams = ({ filtering, page }: FetchProductParameter): URLSearchP
   return searchParams;
 };
 
-export async function fetchProduct(params: FetchProductParameter): Promise<{ products: Product[]; isLast: boolean }> {
+export async function fetchProduct(
+  params: FetchProductParameter,
+): Promise<{ products: Product[]; isLast: boolean; page: number }> {
   const searchParams = '?' + getSearchParams({ ...params, page: params.page ?? 0 }).toString();
 
   const data = await fetchWithToken({
@@ -34,5 +36,5 @@ export async function fetchProduct(params: FetchProductParameter): Promise<{ pro
   });
   const result = (await data.json()) as ServerResponse<Product[]>;
 
-  return { products: result.content, isLast: result.last };
+  return { products: result.content, isLast: result.last, page: result.pageable.pageNumber };
 }
