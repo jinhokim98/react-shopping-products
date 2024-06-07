@@ -5,16 +5,16 @@ import EachCartItem from './EachCartItem';
 
 interface CartItemModalProps {
   isOpen: boolean;
-  onToggle: () => void;
+  onClose: () => void;
 }
 
-function CartItemModal({ isOpen, onToggle }: CartItemModalProps) {
+function CartItemModal({ isOpen, onClose }: CartItemModalProps) {
   const { cartItems } = useLoadCartItems();
   const totalAmount = cartItems?.reduce((acc, cur) => acc + cur.quantity * cur.product.price, 0);
 
   return (
-    <Modal open={isOpen} onClose={onToggle} type="drawer" closeOnESCKeydown>
-      <Modal.Header title="장바구니" onClose={onToggle} />
+    <Modal open={isOpen} onClose={onClose} type="drawer" closeOnESCKeydown style={{ modal: { padding: '24px 16px' } }}>
+      <Modal.Header title="장바구니" onClose={onClose} />
       <Modal.Content>
         <section className={style.container}>
           {cartItems?.map((cartItem) => <EachCartItem key={cartItem.id} cartItem={cartItem} />)}
@@ -30,7 +30,7 @@ function CartItemModal({ isOpen, onToggle }: CartItemModalProps) {
         closeButton={{
           role: 'close',
           text: '닫기',
-          onClick: onToggle,
+          onClick: onClose,
           style: { backgroundColor: '#333333', border: 'none', color: 'white' },
         }}
       />

@@ -43,10 +43,10 @@ function CartActionButton({ cartItem, productId }: CartActionButtonProps) {
 
   const { addCartItem, isPending: addLoading, isError: addError } = useAddCartItem();
   const { deleteCartItem, isPending: deleteLoading, isError: deleteError } = useDeleteCartItem();
-  const { changeQuantity } = usePatchCartItemQuantity();
+  const { changeQuantity, isError: changeQuantityError } = usePatchCartItemQuantity();
 
   const isPending = addLoading || deleteLoading;
-  const isError = addError || deleteError;
+  const isError = addError || deleteError || changeQuantityError;
 
   const onDecrement = () => {
     if (!cartItem) return;
@@ -71,7 +71,7 @@ function CartActionButton({ cartItem, productId }: CartActionButtonProps) {
           <Stepper value={cartItem.quantity} handleDecrement={onDecrement} handleIncrement={onIncrement} />
         </div>
       ) : (
-        <button onClick={() => addCartItem({ productId })} className={className} disabled={isPending}>
+        <button type="button" onClick={() => addCartItem({ productId })} className={className} disabled={isPending}>
           <img src={src} alt={alt} />
           <span className="button__text">{text}</span>
         </button>

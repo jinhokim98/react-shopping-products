@@ -11,11 +11,11 @@ interface StepperProps {
 function Stepper({ value, handleDecrement, handleIncrement }: StepperProps) {
   return (
     <div className={style.stepper}>
-      <button className={style.stepperButton} onClick={handleDecrement}>
+      <button type="button" className={style.stepperButton} onClick={handleDecrement}>
         <img src={minus} alt="handle-decrement" className={style.stepperImg} />
       </button>
       <span className="text">{value}</span>
-      <button className={style.stepperButton} onClick={handleIncrement}>
+      <button type="button" className={style.stepperButton} onClick={handleIncrement}>
         <img src={plus} alt="handle-increment" className={style.stepperImg} />
       </button>
     </div>

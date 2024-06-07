@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 const usePatchCartItemQuantity = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, isError } = useMutation({
+  const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationKey: [QUERY_KEYS.patchCartItemQuantity],
     mutationFn: fetchPatchCartItemQuantity,
     onMutate: async ({ cartItemId, quantity }) => {
@@ -46,6 +46,7 @@ const usePatchCartItemQuantity = () => {
     changeQuantity: mutate,
     isPending,
     isError,
+    isSuccess,
   };
 };
 

@@ -12,11 +12,11 @@ interface CartActionButtonProps {
 
 function CartBadgeButton({ cartItemsLength }: CartActionButtonProps) {
   const quantityClassName = `${style.quantity} ${cartItemsLength > BADGE_MAX_QUANTITY ? style.over : ''}`;
-  const [isOpen, toggleIsOpen] = useReducer((prev) => !prev, false);
+  const [isOpen, setIsOpen] = useReducer((prev) => !prev, false);
 
   return (
     <>
-      <button type="button" className={style.button} onClick={toggleIsOpen}>
+      <button type="button" className={style.button} onClick={setIsOpen}>
         <img src={CartIcon} alt="장바구니 아이콘(장바구니 페이지 이동)" />
         {!!cartItemsLength && (
           <div className={quantityClassName}>
@@ -24,7 +24,7 @@ function CartBadgeButton({ cartItemsLength }: CartActionButtonProps) {
           </div>
         )}
       </button>
-      <CartItemModal isOpen={isOpen} onToggle={toggleIsOpen} />
+      <CartItemModal isOpen={isOpen} onClose={setIsOpen} />
     </>
   );
 }

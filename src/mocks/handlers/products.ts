@@ -17,6 +17,11 @@ const sortProducts = (sort: PriceSort | null, products: Product[]) => {
   return products.sort((prev, cur) => cur.price - prev.price);
 };
 
+const INIT_PAGE = 0;
+const INITIAL_PAGE_SIZE = 20;
+const AFTER_INITIAL_PAGE_SIZE = 4;
+const ADJUSTMENT_NUMBER = 5; // initialPageSize / afterInitialPageSize
+
 const productsHandler = [
   http.get(END_POINTS.products, async ({ request }) => {
     const url = new URL(request.url);
@@ -28,8 +33,8 @@ const productsHandler = [
     const filteredProducts = filterProducts(category, products as Product[]);
     const sortedProducts = sortProducts(sort, filteredProducts);
 
-    const limit = page === 0 ? 20 : 4;
-    const start = page === 0 ? 0 : (page - 5) * 4 + 20;
+    const limit = page === INIT_PAGE ? INITIAL_PAGE_SIZE : AFTER_INITIAL_PAGE_SIZE;
+    const start = page === INIT_PAGE ? 0 : (page - ADJUSTMENT_NUMBER) * AFTER_INITIAL_PAGE_SIZE + INITIAL_PAGE_SIZE;
     const end = start + limit;
 
     const response = makeServerResponse<Product[]>({
