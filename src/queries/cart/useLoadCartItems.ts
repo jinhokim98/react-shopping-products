@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { fetchGetCartItems } from '@apis/index';
 import { useQuery } from '@tanstack/react-query';
 import QUERY_KEYS from '@constants/queryKeys';
@@ -20,10 +19,6 @@ const useLoadCartItems = () => {
     queryKey: [QUERY_KEYS.getCartItems],
     queryFn: getCartItemList,
   });
-
-  useEffect(() => {
-    getCartItemList();
-  }, []);
 
   return {
     cartItems: data,
